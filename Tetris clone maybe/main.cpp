@@ -1,6 +1,6 @@
 #include "Game.h"
-int g_rows = 10;
-int g_columns = 20;
+int g_columns = 10;
+int g_rows = 20;
 float g_cellSize = 40.0f;
 
 int main() {

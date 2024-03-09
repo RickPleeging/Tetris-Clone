@@ -12,8 +12,8 @@ class Game
 {
 private:
 
-	int rows;
 	int columns;
+	int rows;
 	float cellsize;
 
 	sf::RenderWindow window;
@@ -21,11 +21,13 @@ private:
 
 	sf::Clock clock;
 	sf::Clock falltimer;
+	sf::Clock droptimer;
 	float speed;
 
 	void initVariables();
 	Grid grid;
 	Blocks block;
+
 	bool isfalling;
 public:
 	

@@ -14,21 +14,18 @@ Game::~Game()
 void Game::initVariables()
 {
 	//globals
-	rows = g_rows;
 	columns = g_columns;
+	rows = g_rows;
 	cellsize = g_cellSize;
 	//init window
 	ev = sf::Event();
-	window.create(sf::VideoMode(cellsize*rows, cellsize * columns), "SFML Game");
+	window.create(sf::VideoMode(cellsize*columns+200, cellsize * rows +150), "Teris");
 	window.setFramerateLimit(144);
 
 	//variables
-	speed = 1;
+	speed = 0.5;
 	isfalling = false;
-	
-
 }
-
 
 
 //Functions
@@ -53,15 +50,20 @@ bool Game::isRunning()
 void Game::update()
 {
 	//Add Gamelogic here
-
+	static int type = 1;
 
 	if (!isfalling) {
-		block.createblock(1);
+		block.createblock(type);
+		type++;
+		if (type > 7) {
+			type = 1;
+		}
 		isfalling = true;
 	}
 	if (falltimer.getElapsedTime().asSeconds() > speed) {
 		falltimer.restart();
-		block.movedown();
+		if (!block.updateblock(grid.matrix))
+			isfalling = false;
 	}
 
 	return;
@@ -76,6 +78,24 @@ void Game::updateEvents()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
 			window.close();
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+			block.moveleft(grid.matrix);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+			block.moveright(grid.matrix);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+			if (droptimer.getElapsedTime().asSeconds() > 0.2) {
+			block.drop(grid.matrix);
+			droptimer.restart();
+			}
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Hyphen)) {
+			speed+=0.05;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Equal)) {
+			speed-=0.05;
 		}
 	}
 }

@@ -7,15 +7,18 @@ class Grid
 public:
 	Grid();
 	void drawgrid(sf::RenderWindow& window);
-	void setgridatpos(int set, int x, int y);
-	int getgridatpos(int x, int y);
-private:
 
-	int rows;
-	int columns;
-	float cellsize;
+	void update();
+	bool checklines();
+
 
 	std::vector<std::vector<int>> matrix;
+private:
+
+	int columns;
+	int rows;
+	float cellsize;
+
 	sf::RectangleShape gridblock;
 
 	void initgrid();
