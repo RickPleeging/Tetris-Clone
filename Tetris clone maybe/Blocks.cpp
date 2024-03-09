@@ -2,16 +2,32 @@
 
 Blocks::Blocks()
 {
+	//globals
+	rows = g_rows;
+	columns = g_columns;
+	cellsize = g_cellSize;
+	//Rectangle
 	rect.setSize(sf::Vector2f(cellsize, cellsize));
 	rect.setFillColor(sf::Color::Red);
 	rect.setOutlineColor(sf::Color::Cyan);
 	rect.setOutlineThickness(1);
+	//Shape
 	blocktype = 1;
+	//position x,y
 	position.resize(2);
 }
 
-void Blocks::movedown()
+bool Blocks::movedown()
 {
+	for (int i = 0; i < block.size(); i++) {
+		for (int j = 0; j < block[i].size(); j++) {
+			if (block[i][j] != 0)
+			{
+				//TODO check grid on position
+			}
+		}
+	}
+
 	if(position[1] >= columns-2)
 	{
 		return;
@@ -19,7 +35,7 @@ void Blocks::movedown()
 	position[1]++;
 }
 
-void Blocks::createblock()
+void Blocks::createblock(int blocktype)
 {
 	switch (blocktype)
 	{

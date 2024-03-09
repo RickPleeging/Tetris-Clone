@@ -1,13 +1,15 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "gameconfig.h"
+#include "Grid.h"
 
 class Blocks
 {
 private:
 
-	int rows = 10;
-	int columns = 20;
-	float cellsize = 40;
+	int rows;
+	int columns;
+	float cellsize;
 
 	int blocktype;
 		
@@ -19,8 +21,8 @@ public:
 	Blocks();
 	
 
-	void movedown();
-	void createblock();
+	bool movedown();
+	void createblock(int blocktype);
 
 	void getblocktype();
 	void drawblock(sf::RenderWindow& window);

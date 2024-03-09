@@ -129,11 +129,14 @@
   <ItemGroup>
     <ClCompile Include="Blocks.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Grid.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Blocks.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="gameconfig.h" />
+    <ClInclude Include="Grid.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

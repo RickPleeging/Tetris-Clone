@@ -5,13 +5,16 @@
 #include <SFML/Window.hpp>
 #include <vector>
 #include "Blocks.h"
+#include "Grid.h"
+#include "gameconfig.h"
 
 class Game
 {
 private:
-	int rows = 10;
-	int columns = 20;
-	float cellsize = 40;
+
+	int rows;
+	int columns;
+	float cellsize;
 
 	sf::RenderWindow window;
 	sf::Event ev;
@@ -21,10 +24,7 @@ private:
 	float speed;
 
 	void initVariables();
-
-
-	std::vector<std::vector<int>> matrix;
-	sf::RectangleShape gridblock;
+	Grid grid;
 	Blocks block;
 	bool isfalling;
 public:
@@ -35,7 +35,6 @@ public:
 	virtual ~Game();
 
 	bool isRunning();
-	void drawgrid();
 
 	void run();
 	void update();
