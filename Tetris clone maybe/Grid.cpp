@@ -1,5 +1,5 @@
 #include "Grid.h"
-
+#include <iostream>
 Grid::Grid() {
 	initgrid();
 }
@@ -11,9 +11,9 @@ void Grid::initgrid()
 	rows = g_rows;
 	cellsize = g_cellSize;
 	//grid = 0
-	matrix.resize(columns + 1, std::vector<int>(rows + 1));
-	for (int i = 0; i < columns; i++) {
-		for (int j = 0; j < rows; j++) {
+	matrix.resize(rows + 1, std::vector<int>(columns + 1));
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < columns; j++) {
 			matrix[i][j] = 0;
 		}
 	}
@@ -26,9 +26,9 @@ void Grid::initgrid()
 
 void Grid::drawgrid(sf::RenderWindow& window)
 {
-	for (int i = 0; i < columns; i++) {
-		for (int j = 0; j < rows; j++) {
-			gridblock.setPosition(sf::Vector2f(i * cellsize, j * cellsize));
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < columns; j++) {
+			gridblock.setPosition(sf::Vector2f(j * cellsize, i * cellsize));
 			switch (matrix[i][j])
 			{
 			case 1:
@@ -64,32 +64,42 @@ void Grid::drawgrid(sf::RenderWindow& window)
 
 void Grid::update()
 {
-
+	if(checklines() == true)
+	{
+		clearlines();
+	}
+	return;
 }
 
 bool Grid::checklines()
 {
-	int clearammount = 0;
+	//TODO fix
+	toclear.clear();
 
-	for (int i = 0; i <= columns; i++) {
-		for (int j = 0; j <= rows; j++) {
-			if (matrix[i][j] == 0)
-			{
+	for (int i = rows; i > 0; i--) {
+		for (int j = 0; j < columns; j++) {
+			if (matrix[i][j] == 0) {
 				break;
 			}
-			if (j == columns) {
-
-				clearammount++;
-				for (int n = 0; n < rows; n++) {
-					matrix[i][n] = 0;
-				}
+			if (j == columns-1) {
+				//std::cout << "Line detected at row: " << i;
+				toclear.push_back(i);
 			}
 		}
 	}
-	if (clearammount != 0) {
-
+	if (!toclear.empty()) {
 		return true;
 	}
 	return false;
+}
+
+void Grid::clearlines()
+{
+	for (int i : toclear) {
+		for (int j = 0; j < columns; j++) {
+			matrix[i][j] = 0;
+		}
+	}
+	toclear.clear();
 }
 

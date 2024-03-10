@@ -16,6 +16,7 @@ private:
 	int blocktype;
 		
 	std::vector<std::vector<int>> block;
+
 	std::vector<int> position;
 	sf::RectangleShape rect;
 	sf::RectangleShape outline;

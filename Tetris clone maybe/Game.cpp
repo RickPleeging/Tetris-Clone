@@ -54,7 +54,7 @@ void Game::update()
 
 	if (!isfalling) {
 		block.createblock(type);
-		type++;
+		//type++;
 		if (type > 7) {
 			type = 1;
 		}
@@ -65,7 +65,7 @@ void Game::update()
 		if (!block.updateblock(grid.matrix))
 			isfalling = false;
 	}
-
+	grid.update();
 	return;
 }
 

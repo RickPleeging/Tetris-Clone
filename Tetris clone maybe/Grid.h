@@ -10,7 +10,7 @@ public:
 
 	void update();
 	bool checklines();
-
+	void clearlines();
 
 	std::vector<std::vector<int>> matrix;
 private:
@@ -18,7 +18,7 @@ private:
 	int columns;
 	int rows;
 	float cellsize;
-
+	std::vector<int> toclear;
 	sf::RectangleShape gridblock;
 
 	void initgrid();
