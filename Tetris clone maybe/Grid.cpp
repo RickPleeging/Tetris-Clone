@@ -11,6 +11,10 @@ void Grid::initgrid()
 	rows = g_rows;
 	cellsize = g_cellSize;
 	//grid = 0
+	temp.clear();
+	temp.resize(20, std::vector<int>(20));
+
+	std::cout << "temp size[0]: " << temp.size() << "temp size[1]: " << temp[1].size();
 	matrix.resize(rows + 1, std::vector<int>(columns + 1));
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++) {
@@ -67,6 +71,9 @@ void Grid::update()
 	if(checklines() == true)
 	{
 		clearlines();
+		for (auto i : toClear) {
+			movelines();
+		}
 	}
 	return;
 }
@@ -76,18 +83,18 @@ bool Grid::checklines()
 	//TODO fix
 	toclear.clear();
 
-	for (int i = rows; i > 0; i--) {
+	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++) {
 			if (matrix[i][j] == 0) {
 				break;
 			}
 			if (j == columns-1) {
 				//std::cout << "Line detected at row: " << i;
-				toclear.push_back(i);
+				toClear.push_back(i);
 			}
 		}
 	}
-	if (!toclear.empty()) {
+	if (!toClear.empty()) {
 		return true;
 	}
 	return false;
@@ -95,11 +102,32 @@ bool Grid::checklines()
 
 void Grid::clearlines()
 {
-	for (int i : toclear) {
+	for (int i : toClear) {
 		for (int j = 0; j < columns; j++) {
 			matrix[i][j] = 0;
 		}
 	}
-	toclear.clear();
+	//toclear.clear();
+}
+
+
+
+void Grid::movelines()
+  {
+
+	for (int i = toClear[0]; i > 0; i--) {
+		for (int j = 0; j < columns; j++) {
+			temp[i][j] = matrix[i][j];
+			matrix[i][j] = matrix[i - 1][j];
+			matrix[i - 1][j] = temp[i][j];
+		}
+	}
+	toClear.pop_front();
+
+}
+
+void Grid::checknomoremoves()
+{
+
 }
 

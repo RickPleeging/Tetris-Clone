@@ -23,10 +23,11 @@ private:
 
 	using Matrix = std::vector<std::vector<int>>&;
 
+
 public:
 	Blocks();
 	
-	void createblock(int blocktype);
+	bool createblock(int blocktype,Matrix matrix);
 	
 	bool updateblock(Matrix matrix);
 	
@@ -35,6 +36,7 @@ public:
 	bool moveright(Matrix matrix);
 	void drop(Matrix matrix);
 
+	bool checkspace(Matrix matrix);
 
 	void placeblock(Matrix matrix, std::vector<int> position);
 

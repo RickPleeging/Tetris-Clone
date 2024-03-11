@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <random>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <vector>
@@ -11,10 +12,14 @@
 class Game
 {
 private:
+	bool isrunning;
 
 	int columns;
 	int rows;
 	float cellsize;
+
+
+	int randomizer;
 
 	sf::RenderWindow window;
 	sf::Event ev;
@@ -25,13 +30,13 @@ private:
 	float speed;
 
 	void initVariables();
+
 	Grid grid;
 	Blocks block;
 
 	bool isfalling;
 public:
 	
-
 	//Con-Destructors
 	Game();
 	virtual ~Game();
@@ -43,6 +48,7 @@ public:
 	void updateEvents();
 	void render();
 
+	int generateRandomNumber(int min, int max);
 
 
 };

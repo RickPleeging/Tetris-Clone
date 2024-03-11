@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "gameconfig.h"
-
+#include <deque>
 class Grid
 {
 public:
@@ -11,14 +11,18 @@ public:
 	void update();
 	bool checklines();
 	void clearlines();
+	void movelines();
+	void checknomoremoves();
 
 	std::vector<std::vector<int>> matrix;
+	std::vector<std::vector<int>> temp;
 private:
 
 	int columns;
 	int rows;
 	float cellsize;
 	std::vector<int> toclear;
+	std::deque<int> toClear;
 	sf::RectangleShape gridblock;
 
 	void initgrid();

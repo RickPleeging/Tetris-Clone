@@ -1,5 +1,6 @@
 #include "Game.h"
 
+
 //Constructors and Destructors
 Game::Game()
 {
@@ -25,12 +26,17 @@ void Game::initVariables()
 	//variables
 	speed = 0.5;
 	isfalling = false;
+	isrunning = true;
+
+	//randomizer
+
 }
 
 
 //Functions
 void Game::run()
 {
+	
 	sf::Time dt = clock.restart();
 	float dts = dt.asMicroseconds();
 
@@ -43,8 +49,9 @@ void Game::run()
 
 bool Game::isRunning()
 {
-	return window.isOpen();
+	return isrunning;
 }
+
 
 
 void Game::update()
@@ -53,11 +60,16 @@ void Game::update()
 	static int type = 1;
 
 	if (!isfalling) {
-		block.createblock(type);
-		//type++;
-		if (type > 7) {
-			type = 1;
+
+		std::cout << randomizer;
+
+
+		if (!block.createblock(generateRandomNumber(1,7), grid.matrix)) {
+			//Add Gameover here
+			std::cout << "Game over\n";
+			isrunning = false;
 		}
+
 		isfalling = true;
 	}
 	if (falltimer.getElapsedTime().asSeconds() > speed) {
@@ -110,6 +122,15 @@ void Game::render()
 	block.drawblock(window);
 
 	window.display();
+}
+
+int Game::generateRandomNumber(int min, int max)
+{
+	std::random_device rd;
+	std::mt19937 generator(rd());
+	std::uniform_int_distribution<int> distribution(min, max);
+	return distribution(generator);
+
 }
 
 

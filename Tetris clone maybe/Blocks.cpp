@@ -17,10 +17,12 @@ Blocks::Blocks()
 	outline.setOutlineThickness(2);
 	block.clear();
 	block.resize(4, std::vector<int>(4));
-
+	//variables 
+	blocktype = 0;
 	//position x,y // rows,collumns
 	position.clear();
 	position.resize(2);
+
 }
 
 //return true if updated, return false if block placed
@@ -59,26 +61,39 @@ bool Blocks::movedown(Matrix matrix)
 
 void Blocks::drop(Matrix matrix)
 {
-	//Todo perhaps fix: dropping to the bottom stops at block border
-
-	int temp; // 19
+	int empty=0;
+	//Find Ammount of empty rows starting from the bottom
+	for (int i = block.size()-1; i >= 0; i--) {
+		for (int j = 0; j < block[i].size(); j++) {
+			if (block[i][j] == 1)
+				break;
+			else if (j == block[i].size()-1) {
+				empty++;
+			}
+			
+		}
+	}
+	int temp;
+	//Remaining to the bottom
 	int remaining = rows - position[1]; //20
-	int droppos = remaining - block[1].size(); //19
+	//Remaining to the bottom + lowest position of the block
+	int droppos = remaining - block[1].size()+empty; //19
 
-	//drop
+	//For Every square in the block find its lowest possible position
  	for (int i = 0; i < block.size(); i++) {
 		for (int j = 0; j < block[i].size(); j++) {
 			if (block[i][j] == 0)
 				continue;
-			//for every square in the block:
+			
 			temp = 0;
 			for (int r = 0; r < remaining; r++) {
-				
+				//check if bellow is free space
 				if (i + position[1] + r < rows && matrix[i + position[1]+r+1][j + position[0]] == 0)
 				{
 					temp++;
 					continue;
 				}
+				//drop position should be the highest out of all squares lowest positions
 				if (temp < droppos) {
 					droppos = temp;
 					break;
@@ -87,7 +102,10 @@ void Blocks::drop(Matrix matrix)
 		}
 	}
 	position[1] += droppos;
+	placeblock(matrix, position);
 }
+
+
 
 bool Blocks::moveleft(Matrix matrix)
 {
@@ -136,7 +154,21 @@ void Blocks::placeblock(Matrix matrix, std::vector<int> position)
 
 }
 
-void Blocks::createblock(int type)
+bool Blocks::checkspace(Matrix matrix)
+{
+	for (int i = 0; i < block.size(); i++) {
+		for (int j = 0; j < block[i].size(); j++) {
+			if (block[i][j] == 0)
+				continue;
+			if (matrix[i+position[1]][j+position[0]] != 0)
+				return false;
+		}
+	}
+
+	return true;
+}
+
+bool Blocks::createblock(int type, Matrix matrix)
 {
 	switch (type)
 	{
@@ -287,6 +319,15 @@ void Blocks::createblock(int type)
 	default:
 		break;
 	}
+
+	if (checkspace(matrix)) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
 }
 
 
