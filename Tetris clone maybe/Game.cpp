@@ -101,7 +101,7 @@ void Game::updateEvents()
 
 			}
 			if (ev.key.code == sf::Keyboard::Up) {
-				block.rotateblock();
+				block.rotateblock(grid.matrix,0);
 			}
 			if (ev.key.code == sf::Keyboard::R) {
 				grid.gridclear();

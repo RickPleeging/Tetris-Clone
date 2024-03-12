@@ -24,6 +24,7 @@ Blocks::Blocks()
 	//position x,y // rows,collumns
 	position.clear();
 	position.resize(2);
+	//debug
 
 }
 
@@ -168,6 +169,10 @@ bool Blocks::checkspace(Matrix matrix)
 {
 	for (int i = 0; i < block.size(); i++) {
 		for (int j = 0; j < block[i].size(); j++) {
+			if (i+position[0] < 0 || i+position[0] > rows || j+ position[1] < 0 || j+ position[1] > columns)
+			{
+				return false;
+			}
 			if (block[i][j] == 0)
 				continue;
 			if (matrix[i+position[1]][j+position[0]] != 0)
@@ -276,10 +281,12 @@ bool Blocks::createblock(int type, Matrix matrix)
 }
 
 
-void Blocks::rotateblock()
+void Blocks::rotateblock(Matrix matrix, int offset)
 {
-
+	
+	// TODO Fix Collision
 	rotation++;
+	rotation -= offset;
 	
 	if (rotation > 4) {
 		rotation = 1;
@@ -290,45 +297,75 @@ void Blocks::rotateblock()
 	case 1:
 		break;
 	case 2: // T block
-		if (rotation == 1) { block = { {0,0,0},{0,1,0}, {1,1,1} }; }
-		if (rotation == 2) { block = { {1,0,0},{1,1,0}, {1,0,0} }; }
-		if (rotation == 3) { block = { {1,1,1},{0,1,0}, {0,0,0} }; }
-		if (rotation == 4) { block = { {0,0,1},{0,1,1}, {0,0,1} }; }
+		if (rotation == 1) { newblock = { {0,0,0},{0,1,0}, {1,1,1} }; }
+		if (rotation == 2) { newblock = { {1,0,0},{1,1,0}, {1,0,0} }; }
+		if (rotation == 3) { newblock = { {1,1,1},{0,1,0}, {0,0,0} }; }
+		if (rotation == 4) { newblock = { {0,0,1},{0,1,1}, {0,0,1} }; }
 	break;
-	case 3: // L BLOCK
-		if (rotation == 1) { block = { {0,0,1},{1,1,1}, {0,0,0} }; }
-		if (rotation == 2) { block = { {0,1,0},{0,1,0}, {0,1,1} }; }
-		if (rotation == 3) { block = { {0,0,0},{1,1,1}, {1,0,0} }; }
-		if (rotation == 4) { block = { {1,1,0},{0,1,0}, {0,1,0} }; }
-		break;
-	case 4: // J BLOCK
-		if (rotation == 1) { block = { {1,0,0},{1,1,1}, {0,0,0} }; }
-		if (rotation == 2) { block = { {0,1,1},{0,1,0}, {0,1,0} }; }
-		if (rotation == 3) { block = { {0,0,0},{1,1,1}, {0,0,1} }; }
-		if (rotation == 4) { block = { {0,1,0},{0,1,0}, {1,1,0} }; }
-		break;
-	case 5: // S BLOCK
-		if (rotation == 1) { block = { {0,1,1},{1,1,0}, {0,0,0} }; }
-		if (rotation == 2) { block = { {0,1,0},{0,1,1}, {0,0,1} }; }
-		if (rotation == 3) { block = { {0,0,0},{0,1,1}, {1,1,0} }; }
-		if (rotation == 4) { block = { {1,0,0},{1,1,0}, {0,1,0} }; }
-		break;
-	case 6: // Z BLOCK
-		if (rotation == 1) { block = { {1,1,0},{0,1,1}, {0,0,0} }; }
-		if (rotation == 2) { block = { {0,0,1},{0,1,1}, {0,1,0} }; }
-		if (rotation == 3) { block = { {0,0,0},{1,1,0}, {0,1,1} }; }
-		if (rotation == 4) { block = { {0,1,0},{1,1,0}, {1,0,0} }; }
+	case 3: // L BLOCK		 
+		if (rotation == 1) { newblock = { {0,0,1},{1,1,1}, {0,0,0} }; }
+		if (rotation == 2) { newblock = { {0,1,0},{0,1,0}, {0,1,1} }; }
+		if (rotation == 3) { newblock = { {0,0,0},{1,1,1}, {1,0,0} }; }
+		if (rotation == 4) { newblock = { {1,1,0},{0,1,0}, {0,1,0} }; }
+		break;				 
+	case 4: // J BLOCK		 
+		if (rotation == 1) { newblock = { {1,0,0},{1,1,1}, {0,0,0} }; }
+		if (rotation == 2) { newblock = { {0,1,1},{0,1,0}, {0,1,0} }; }
+		if (rotation == 3) { newblock = { {0,0,0},{1,1,1}, {0,0,1} }; }
+		if (rotation == 4) { newblock = { {0,1,0},{0,1,0}, {1,1,0} }; }
+		break;				 
+	case 5: // S BLOCK		 
+		if (rotation == 1) { newblock = { {0,1,1},{1,1,0}, {0,0,0} }; }
+		if (rotation == 2) { newblock = { {0,1,0},{0,1,1}, {0,0,1} }; }
+		if (rotation == 3) { newblock = { {0,0,0},{0,1,1}, {1,1,0} }; }
+		if (rotation == 4) { newblock = { {1,0,0},{1,1,0}, {0,1,0} }; }
+		break;				 
+	case 6: // Z BLOCK		 
+		if (rotation == 1) { newblock = { {1,1,0},{0,1,1}, {0,0,0} }; }
+		if (rotation == 2) { newblock = { {0,0,1},{0,1,1}, {0,1,0} }; }
+		if (rotation == 3) { newblock = { {0,0,0},{1,1,0}, {0,1,1} }; }
+		if (rotation == 4) { newblock = { {0,1,0},{1,1,0}, {1,0,0} }; }
 		break;
 
 	case 7: // I (LINE) BLOCK
-		if (rotation == 1) { block = { {0,0,0,0},{1,1,1,1}, {0,0,0,0}, {0,0,0,0} }; }
-		if (rotation == 2) { block = { {0,0,1,0},{0,0,1,0}, {0,0,1,0}, {0,0,1,0} }; }
-		if (rotation == 3) { block = { {0,0,0,0},{0,0,0,0}, {1,1,1,1}, {0,0,0,0} }; }
-		if (rotation == 4) { block = { {0,1,0,0},{0,1,0,0}, {0,1,0,0}, {0,1,0,0} }; }
+		if (rotation == 1) { newblock = { {0,0,0,0},{1,1,1,1}, {0,0,0,0}, {0,0,0,0} }; }
+		if (rotation == 2) { newblock = { {0,0,1,0},{0,0,1,0}, {0,0,1,0}, {0,0,1,0} }; }
+		if (rotation == 3) { newblock = { {0,0,0,0},{0,0,0,0}, {1,1,1,1}, {0,0,0,0} }; }
+		if (rotation == 4) { newblock = { {0,1,0,0},{0,1,0,0}, {0,1,0,0}, {0,1,0,0} }; }
 		break;
 	default:
 		break;
 	}
+	if(kickback(matrix))
+	{
+		for (int i = 0; i < newblock.size(); i++) {
+			for (int j = 0; j < newblock[i].size(); j++) {
+				block[i][j] = newblock[i][j];
+			}
+		}
+	}
+	else 
+	{
+		rotation--;
+	}
+}
+
+bool Blocks::kickback(Matrix matrix)
+{
+	for (int i = 0; i < newblock.size(); i++) {
+		for (int j = 0; j < newblock[i].size(); j++) {
+			if (newblock[i][j] == 0) {
+				continue;
+			}
+			if (i + position[1] < 0 || i + position[1] > rows - 1) {
+				return false;
+			}
+			if (j + position[0] < 0 || j + position[0] > columns - 1) {
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 

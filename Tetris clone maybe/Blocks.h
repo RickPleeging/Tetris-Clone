@@ -16,6 +16,7 @@ private:
 	int blocktype;
 	int rotation;
 	std::vector<std::vector<int>> block;
+	std::vector<std::vector<int>> newblock;
 
 	std::vector<int> position;
 	sf::RectangleShape rect;
@@ -28,8 +29,8 @@ public:
 	Blocks();
 	
 	bool createblock(int blocktype,Matrix matrix);
-	void rotateblock();
-
+	void rotateblock(Matrix matrix, int offset);
+	bool kickback(Matrix matrix);
 	bool updateblock(Matrix matrix);
 	
 	bool movedown(Matrix matrix);
