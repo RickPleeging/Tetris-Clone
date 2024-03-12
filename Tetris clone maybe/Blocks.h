@@ -28,7 +28,8 @@ public:
 	Blocks();
 	
 	bool createblock(int blocktype,Matrix matrix);
-	
+	void rotateblock();
+
 	bool updateblock(Matrix matrix);
 	
 	bool movedown(Matrix matrix);

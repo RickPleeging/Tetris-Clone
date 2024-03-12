@@ -331,6 +331,32 @@ bool Blocks::createblock(int type, Matrix matrix)
 }
 
 
+void Blocks::rotateblock()
+{
+	std::vector<std::vector<int>> rotatedBlock;
+	int blockSize = block.size();
+
+	// Transpose the block matrix to rotate it clockwise
+	for (int i = 0; i < blockSize; ++i) {
+		rotatedBlock.push_back(std::vector<int>());
+		for (int j = 0; j < blockSize; ++j) {
+			rotatedBlock[i].push_back(block[blockSize - 1 - j][i]);
+		}
+	}
+
+	// Update the block with the rotated block
+	block = rotatedBlock;
+
+	// Update the outline size accordingly
+	outline.setSize(sf::Vector2f(blockSize * cellsize, blockSize * cellsize));
+
+	//// Check if the rotated block can fit in the current position
+	//if (!checkspace(matrix)) {
+	//	// Revert the block to its original state if it cannot fit
+	//	block = rotatedBlock;
+	//}
+}
+
 
 
 void Blocks::getblocktype()

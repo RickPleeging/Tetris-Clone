@@ -5,9 +5,10 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <vector>
-#include "Blocks.h"
-#include "Grid.h"
 #include "gameconfig.h"
+#include "Grid.h"
+#include "Blocks.h"
+#include "UI.h"
 
 class Game
 {
@@ -18,8 +19,8 @@ private:
 	int rows;
 	float cellsize;
 
-
 	int randomizer;
+
 
 	sf::RenderWindow window;
 	sf::Event ev;
@@ -33,6 +34,7 @@ private:
 
 	Grid grid;
 	Blocks block;
+	UI UserInterface;
 
 	bool isfalling;
 public:

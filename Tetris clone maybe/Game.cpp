@@ -103,6 +103,9 @@ void Game::updateEvents()
 			droptimer.restart();
 			}
 		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+			block.rotateblock();
+		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Hyphen)) {
 			speed+=0.05;
 		}
