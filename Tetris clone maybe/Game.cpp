@@ -61,7 +61,7 @@ void Game::update()
 
 	if (!isfalling) {
 
-		std::cout << randomizer;
+
 
 
 		if (!block.createblock(generateRandomNumber(1,7), grid.matrix)) {
@@ -74,10 +74,12 @@ void Game::update()
 	}
 	if (falltimer.getElapsedTime().asSeconds() > speed) {
 		falltimer.restart();
-		if (!block.updateblock(grid.matrix))
+		if (!block.updateblock(grid.matrix)) {
 			isfalling = false;
+		}
+
 	}
-	grid.update();
+		grid.update();
 	return;
 }
 
@@ -88,24 +90,31 @@ void Game::updateEvents()
 		if (ev.type == sf::Event::Closed) {
 			window.close();
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
-			window.close();
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-			block.moveleft(grid.matrix);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-			block.moveright(grid.matrix);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-			if (droptimer.getElapsedTime().asSeconds() > 0.2) {
-			block.drop(grid.matrix);
-			droptimer.restart();
+		if (ev.type == sf::Event::KeyPressed) {
+			if (ev.key.code == sf::Keyboard::X)
+			{
+				window.close();
 			}
+			if (ev.key.code == sf::Keyboard::Left) {
+				block.moveleft(grid.matrix);
+
+			}
+			if (ev.key.code == sf::Keyboard::Right) {
+				block.moveright(grid.matrix);
+
+			}
+			if (ev.key.code == sf::Keyboard::R) {
+				block.rotateblock();
+			}
+			if (ev.key.code == sf::Keyboard::Down) {
+				if (droptimer.getElapsedTime().asSeconds() > 0.2) {
+					block.drop(grid.matrix);
+					droptimer.restart();
+				}
+			}
+
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-			block.rotateblock();
-		}
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Hyphen)) {
 			speed+=0.05;
 		}

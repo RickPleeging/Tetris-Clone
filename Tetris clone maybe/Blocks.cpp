@@ -19,6 +19,8 @@ Blocks::Blocks()
 	block.resize(4, std::vector<int>(4));
 	//variables 
 	blocktype = 0;
+	rotation = 1;
+
 	//position x,y // rows,collumns
 	position.clear();
 	position.resize(2);
@@ -102,7 +104,7 @@ void Blocks::drop(Matrix matrix)
 		}
 	}
 	position[1] += droppos;
-	placeblock(matrix, position);
+	//placeblock(matrix, position);
 }
 
 
@@ -170,17 +172,15 @@ bool Blocks::checkspace(Matrix matrix)
 
 bool Blocks::createblock(int type, Matrix matrix)
 {
+	rotation = 1;
 	switch (type)
 	{
 	case 1: //square
 		block.clear();
 		block.resize(2, std::vector<int>(2));
 		outline.setSize(sf::Vector2f(2*cellsize, 2*cellsize));
+		block = { {1,1},{1,1}};
 
-		block[0][0] = 1;
-		block[0][1] = 1;
-		block[1][0] = 1;
-		block[1][1] = 1;
 		blocktype = 1;
 		rect.setFillColor(sf::Color(223, 227, 11, 255));
 
@@ -192,13 +192,8 @@ bool Blocks::createblock(int type, Matrix matrix)
 		block.resize(3, std::vector<int>(3));
 		outline.setSize(sf::Vector2f(3 * cellsize, 3 * cellsize));
 
-		block[0][0] = 1;
-		block[0][1] = 1;
-		block[0][2] = 1;
+		block = { {0,0,0},{0,1,0}, {1,1,1} };
 
-		block[1][0] = 0;
-		block[1][1] = 1;
-		block[1][2] = 0;
 		blocktype = 2;
 		rect.setFillColor(sf::Color(165, 9, 171, 255));
 		position = { 4,0 };
@@ -208,17 +203,7 @@ bool Blocks::createblock(int type, Matrix matrix)
 		block.resize(3, std::vector<int>(3));
 		outline.setSize(sf::Vector2f(3 * cellsize, 3 * cellsize));
 
-		block[0][0] = 1;
-		block[0][1] = 0;
-		block[0][2] = 0;
-
-		block[1][0] = 1;
-		block[1][1] = 0;
-		block[1][2] = 0;
-
-		block[2][0] = 1;
-		block[2][1] = 1;
-		block[2][2] = 0;
+		block = { {0,0,1},{1,1,1}, {0,0,0} };
 
 
 		position = { 4,0 };
@@ -230,17 +215,7 @@ bool Blocks::createblock(int type, Matrix matrix)
 		block.resize(3, std::vector<int>(3));
 		outline.setSize(sf::Vector2f(3 * cellsize, 3 * cellsize));
 
-		block[0][0] = 0;
-		block[0][1] = 0;
-		block[0][2] = 1;
-
-		block[1][0] = 0;
-		block[1][1] = 0;
-		block[1][2] = 1;
-
-		block[2][0] = 0;
-		block[2][1] = 1;
-		block[2][2] = 1;
+		block = { {1,0,0},{1,1,1}, {0,0,0} };
 		position = { 4,0 };
 		blocktype = 4;
 		rect.setFillColor(sf::Color(230, 135, 41, 255));
@@ -251,17 +226,7 @@ bool Blocks::createblock(int type, Matrix matrix)
 		block.resize(3, std::vector<int>(3));
 		outline.setSize(sf::Vector2f(3 * cellsize, 3 * cellsize));
 
-		block[0][0] = 0;
-		block[0][1] = 1;
-		block[0][2] = 1;
-
-		block[1][0] = 1;
-		block[1][1] = 1;
-		block[1][2] = 0;
-
-		block[2][0] = 0;
-		block[2][1] = 0;
-		block[2][2] = 0;
+		block = { {0,1,1},{1,1,0}, {0,0,0} };
 		position = { 4,0 };
 		blocktype = 5;
 		rect.setFillColor(sf::Color(7, 222, 28, 255));
@@ -272,17 +237,7 @@ bool Blocks::createblock(int type, Matrix matrix)
 		block.resize(3, std::vector<int>(3));
 		outline.setSize(sf::Vector2f(3 * cellsize, 3 * cellsize));
 
-		block[0][0] = 1;
-		block[0][1] = 1;
-		block[0][2] = 0;
-
-		block[1][0] = 0;
-		block[1][1] = 1;
-		block[1][2] = 1;
-
-		block[2][0] = 0;
-		block[2][1] = 0;
-		block[2][2] = 0;
+		block = { {1,1,0},{0,1,1}, {0,0,0} };
 		position = { 4,0 };
 		blocktype = 6;
 		rect.setFillColor(sf::Color(148, 14, 7, 255));
@@ -293,25 +248,7 @@ bool Blocks::createblock(int type, Matrix matrix)
 		block.resize(4, std::vector<int>(4));
 		outline.setSize(sf::Vector2f(4 * cellsize, 4 * cellsize));
 
-		block[0][0] = 0;
-		block[0][1] = 0;
-		block[0][2] = 1;
-		block[0][3] = 0;
-
-		block[1][0] = 0;
-		block[1][1] = 0;
-		block[1][2] = 1;
-		block[1][3] = 0;
-
-		block[2][0] = 0;
-		block[2][1] = 0;
-		block[2][2] = 1;
-		block[2][3] = 0;
-
-		block[3][0] = 0;
-		block[3][1] = 0;
-		block[3][2] = 1;
-		block[3][3] = 0;
+		block = { {0,0,0,0},{1,1,1,1}, {0,0,0,0}, {0,0,0,0} };
 		position = { 3,0 };
 		blocktype = 7;
 		rect.setFillColor(sf::Color(51, 184, 189, 255));
@@ -333,28 +270,57 @@ bool Blocks::createblock(int type, Matrix matrix)
 
 void Blocks::rotateblock()
 {
-	std::vector<std::vector<int>> rotatedBlock;
-	int blockSize = block.size();
 
-	// Transpose the block matrix to rotate it clockwise
-	for (int i = 0; i < blockSize; ++i) {
-		rotatedBlock.push_back(std::vector<int>());
-		for (int j = 0; j < blockSize; ++j) {
-			rotatedBlock[i].push_back(block[blockSize - 1 - j][i]);
-		}
+	rotation++;
+	
+	if (rotation > 4) {
+		rotation = 1;
 	}
 
-	// Update the block with the rotated block
-	block = rotatedBlock;
+	//std::cout << "\nRotated: " << rotation;
+	switch (blocktype) {
+	case 1:
+		break;
+	case 2: // T block
+		if (rotation == 1) { block = { {0,0,0},{0,1,0}, {1,1,1} }; }
+		if (rotation == 2) { block = { {1,0,0},{1,1,0}, {1,0,0} }; }
+		if (rotation == 3) { block = { {1,1,1},{0,1,0}, {0,0,0} }; }
+		if (rotation == 4) { block = { {0,0,1},{0,1,1}, {0,0,1} }; }
+	break;
+	case 3: // L BLOCK
+		if (rotation == 1) { block = { {0,0,1},{1,1,1}, {0,0,0} }; }
+		if (rotation == 2) { block = { {0,1,0},{0,1,0}, {0,1,1} }; }
+		if (rotation == 3) { block = { {0,0,0},{1,1,1}, {1,0,0} }; }
+		if (rotation == 4) { block = { {1,1,0},{0,1,0}, {0,1,0} }; }
+		break;
+	case 4: // J BLOCK
+		if (rotation == 1) { block = { {1,0,0},{1,1,1}, {0,0,0} }; }
+		if (rotation == 2) { block = { {0,1,1},{0,1,0}, {0,1,0} }; }
+		if (rotation == 3) { block = { {0,0,0},{1,1,1}, {0,0,1} }; }
+		if (rotation == 4) { block = { {0,1,0},{0,1,0}, {1,1,0} }; }
+		break;
+	case 5: // S BLOCK
+		if (rotation == 1) { block = { {0,1,1},{1,1,0}, {0,0,0} }; }
+		if (rotation == 2) { block = { {0,1,0},{0,1,1}, {0,0,1} }; }
+		if (rotation == 3) { block = { {0,0,0},{0,1,1}, {1,1,0} }; }
+		if (rotation == 4) { block = { {1,0,0},{1,1,0}, {0,1,0} }; }
+		break;
+	case 6: // Z BLOCK
+		if (rotation == 1) { block = { {1,1,0},{0,1,1}, {0,0,0} }; }
+		if (rotation == 2) { block = { {0,0,1},{0,1,1}, {0,1,0} }; }
+		if (rotation == 3) { block = { {0,0,0},{1,1,0}, {0,1,1} }; }
+		if (rotation == 4) { block = { {0,1,0},{1,1,0}, {1,0,0} }; }
+		break;
 
-	// Update the outline size accordingly
-	outline.setSize(sf::Vector2f(blockSize * cellsize, blockSize * cellsize));
-
-	//// Check if the rotated block can fit in the current position
-	//if (!checkspace(matrix)) {
-	//	// Revert the block to its original state if it cannot fit
-	//	block = rotatedBlock;
-	//}
+	case 7: // I (LINE) BLOCK
+		if (rotation == 1) { block = { {0,0,0,0},{1,1,1,1}, {0,0,0,0}, {0,0,0,0} }; }
+		if (rotation == 2) { block = { {0,0,1,0},{0,0,1,0}, {0,0,1,0}, {0,0,1,0} }; }
+		if (rotation == 3) { block = { {0,0,0,0},{0,0,0,0}, {1,1,1,1}, {0,0,0,0} }; }
+		if (rotation == 4) { block = { {0,1,0,0},{0,1,0,0}, {0,1,0,0}, {0,1,0,0} }; }
+		break;
+	default:
+		break;
+	}
 }
 
 

@@ -14,7 +14,7 @@ private:
 	float cellsize;
 
 	int blocktype;
-		
+	int rotation;
 	std::vector<std::vector<int>> block;
 
 	std::vector<int> position;
