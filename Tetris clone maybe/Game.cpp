@@ -56,20 +56,17 @@ bool Game::isRunning()
 
 void Game::update()
 {
-	//Add Gamelogic here
+	//Revamp this thing please for the love of god its bad 
+
 	static int type = 1;
 
-	if (!isfalling) {
-
-
-
-
+	if (!isfalling) 
+	{
 		if (!block.createblock(generateRandomNumber(1,7), grid.matrix)) {
 			//Add Gameover here
 			std::cout << "Game over\n";
 			isrunning = false;
 		}
-
 		isfalling = true;
 	}
 	if (falltimer.getElapsedTime().asSeconds() > speed) {
@@ -103,8 +100,11 @@ void Game::updateEvents()
 				block.moveright(grid.matrix);
 
 			}
-			if (ev.key.code == sf::Keyboard::R) {
+			if (ev.key.code == sf::Keyboard::Up) {
 				block.rotateblock();
+			}
+			if (ev.key.code == sf::Keyboard::R) {
+				grid.gridclear();
 			}
 			if (ev.key.code == sf::Keyboard::Down) {
 				if (droptimer.getElapsedTime().asSeconds() > 0.2) {

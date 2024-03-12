@@ -45,7 +45,7 @@ bool Blocks::updateblock(Matrix matrix)
 
 bool Blocks::movedown(Matrix matrix)
 {
-
+	
 	//for each square in a block check if bellow it is free, if not return false
 	if (position[1] + 1 == rows)
 		return false;
@@ -63,12 +63,20 @@ bool Blocks::movedown(Matrix matrix)
 
 void Blocks::drop(Matrix matrix)
 {
+	// FUCKING FIXED IT YEET
+
 	int empty=0;
+	bool stopit = false;
 	//Find Ammount of empty rows starting from the bottom
 	for (int i = block.size()-1; i >= 0; i--) {
+		if (stopit) {
+			break;
+		}
 		for (int j = 0; j < block[i].size(); j++) {
-			if (block[i][j] == 1)
+			if (block[i][j] == 1) {
+				stopit = true;
 				break;
+			}
 			else if (j == block[i].size()-1) {
 				empty++;
 			}
