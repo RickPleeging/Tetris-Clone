@@ -9,6 +9,7 @@
 #include "Grid.h"
 #include "Blocks.h"
 #include "UI.h"
+#include <queue>
 
 class Game
 {
@@ -34,7 +35,11 @@ private:
 
 	Grid grid;
 	Blocks block;
+
+
 	UI UserInterface;
+
+	std::queue<int> nextblock;
 
 	bool isfalling;
 public:

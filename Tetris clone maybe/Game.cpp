@@ -28,6 +28,11 @@ void Game::initVariables()
 	isfalling = false;
 	isrunning = true;
 
+	//initiate 1 block + 3 previews 
+	nextblock.push(generateRandomNumber(1, 7));
+	nextblock.push(generateRandomNumber(1, 7));
+	nextblock.push(generateRandomNumber(1, 7));
+
 	//randomizer
 
 }
@@ -57,16 +62,23 @@ bool Game::isRunning()
 void Game::update()
 {
 	//Revamp this thing please for the love of god its bad 
+	
 
-	static int type = 1;
-
-	if (!isfalling) 
+	if (!isfalling) // if the block is placed into the grid
 	{
-		if (!block.createblock(generateRandomNumber(1,7), grid.matrix)) {
-			//Add Gameover here
+
+		//create block from queue
+		block.createblock(nextblock.front());
+		nextblock.pop();
+		nextblock.push(generateRandomNumber(1, 7));
+		UserInterface.updatepreview(nextblock.front());
+		//check if blockcreation possible
+		if (!block.checkspace(grid.matrix)) {
+			//if cant create block, gameover
 			std::cout << "Game over\n";
 			isrunning = false;
 		}
+		
 		isfalling = true;
 		std::cout <<"Current Score: " << grid.score << "\n";
 	}

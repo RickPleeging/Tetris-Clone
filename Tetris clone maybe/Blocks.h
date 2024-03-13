@@ -28,7 +28,8 @@ private:
 public:
 	Blocks();
 	
-	bool createblock(int blocktype,Matrix matrix);
+	void createblock(int blocktype);
+	bool checkspace(Matrix matrix);
 	void rotateblock(Matrix matrix, int offset);
 	bool kickback(Matrix matrix);
 	bool updateblock(Matrix matrix);
@@ -38,12 +39,16 @@ public:
 	bool moveright(Matrix matrix);
 	void drop(Matrix matrix);
 
-	bool checkspace(Matrix matrix);
+	void setposition(int x, int y);
 
 	void placeblock(Matrix matrix, std::vector<int> position);
 
-	void getblocktype();
+	int getblocksize();
 
 	void drawblock(sf::RenderWindow& window);
-};
+	void drawblockOffGrid(sf::RenderWindow& window,int x, int y);
+	float centercoordinates;
 
+
+};
+ 

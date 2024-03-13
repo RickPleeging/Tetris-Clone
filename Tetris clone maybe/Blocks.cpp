@@ -184,7 +184,13 @@ bool Blocks::checkspace(Matrix matrix)
 	return true;
 }
 
-bool Blocks::createblock(int type, Matrix matrix)
+void Blocks::setposition(int x, int y)
+{
+	position[0] = x;
+	position[1] = y;
+}
+
+void Blocks::createblock(int type)
 {
 	rotation = 1;
 	switch (type)
@@ -271,13 +277,7 @@ bool Blocks::createblock(int type, Matrix matrix)
 		break;
 	}
 
-	if (checkspace(matrix)) {
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	centercoordinates = (cellsize * block.size()) / 2;
 
 }
 
@@ -375,9 +375,9 @@ bool Blocks::kickback(Matrix matrix)
 
 
 
-void Blocks::getblocktype()
+int Blocks::getblocksize()
 {
-
+	return block.size();
 }
 
 
@@ -392,6 +392,20 @@ void Blocks::drawblock(sf::RenderWindow& window)
 			}
 		}
 	}
-	outline.setPosition(sf::Vector2f(position[0]*cellsize, position[1]*cellsize));
+	outline.setPosition(sf::Vector2f(position[0] * cellsize, position[1] * cellsize));
+	window.draw(outline);
+}
+
+void Blocks::drawblockOffGrid(sf::RenderWindow& window,int x, int y) {
+	for (int i = 0; i < block.size(); i++) {
+		for (int j = 0; j < block[i].size(); j++) {
+			if (block[i][j] == 0)
+				continue;
+
+			rect.setPosition(sf::Vector2f(j * cellsize + x, i * cellsize + y));
+			window.draw(rect);
+		}
+	}
+	//outline.setPosition(sf::Vector2f(x,y));
 	//window.draw(outline);
 }
