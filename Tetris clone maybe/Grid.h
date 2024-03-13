@@ -15,8 +15,12 @@ public:
 	void checknomoremoves();
 
 	void gridclear();
+
 	std::vector<std::vector<int>> matrix;
 	std::vector<std::vector<int>> temp;
+
+	int score;
+
 private:
 
 	int columns;

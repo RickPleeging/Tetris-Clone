@@ -6,6 +6,7 @@ Blocks::Blocks()
 	columns = g_columns;
 	rows = g_rows;
 	cellsize = g_cellSize;
+
 	//Rectangle
 	rect.setSize(sf::Vector2f(cellsize, cellsize));
 	rect.setFillColor(sf::Color::Red);
@@ -336,7 +337,7 @@ void Blocks::rotateblock(Matrix matrix, int offset)
 	default:
 		break;
 	}
-	if(kickback(matrix))
+	if(blocktype != 1 && kickback(matrix))
 	{
 		for (int i = 0; i < newblock.size(); i++) {
 			for (int j = 0; j < newblock[i].size(); j++) {
@@ -361,6 +362,10 @@ bool Blocks::kickback(Matrix matrix)
 				return false;
 			}
 			if (j + position[0] < 0 || j + position[0] > columns - 1) {
+				return false;
+			}
+			if (matrix[i + position[1]][j + position[0]] != 0)
+			{
 				return false;
 			}
 		}
@@ -388,5 +393,5 @@ void Blocks::drawblock(sf::RenderWindow& window)
 		}
 	}
 	outline.setPosition(sf::Vector2f(position[0]*cellsize, position[1]*cellsize));
-	window.draw(outline);
+	//window.draw(outline);
 }

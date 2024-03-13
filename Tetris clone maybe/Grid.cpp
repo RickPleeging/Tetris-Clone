@@ -24,8 +24,10 @@ void Grid::initgrid()
 	//init Gridblock
 	gridblock.setSize(sf::Vector2f(cellsize, cellsize));
 	gridblock.setFillColor(sf::Color::Black);
-	gridblock.setOutlineColor(sf::Color::Cyan);
+	gridblock.setOutlineColor(sf::Color(52, 222, 235,155));
 	gridblock.setOutlineThickness(1);
+	//temp score
+	score = 0;
 }
 
 void Grid::drawgrid(sf::RenderWindow& window)
@@ -69,7 +71,23 @@ void Grid::drawgrid(sf::RenderWindow& window)
 void Grid::update()
 {
 	if(checklines() == true)
-	{
+	{	
+		int a=toClear.size();
+		switch (a) {
+		case 1:
+			score += 100;
+			break;
+		case 2:
+			score += 350;
+			break;
+		case 3:
+			score += 500;
+			break;
+		case 4:
+			score += 1000;
+			break;
+		}
+
 		clearlines();
 		for (auto i : toClear) {
 			movelines();
@@ -91,6 +109,7 @@ bool Grid::checklines()
 			if (j == columns-1) {
 				//std::cout << "Line detected at row: " << i;
 				toClear.push_back(i);
+				
 			}
 		}
 	}

@@ -20,7 +20,7 @@ void Game::initVariables()
 	cellsize = g_cellSize;
 	//init window
 	ev = sf::Event();
-	window.create(sf::VideoMode(cellsize*columns+200, cellsize * rows +150), "Teris");
+	window.create(sf::VideoMode(g_windowwidth,g_windowheight ), "Teris");
 	window.setFramerateLimit(144);
 
 	//variables
@@ -68,6 +68,7 @@ void Game::update()
 			isrunning = false;
 		}
 		isfalling = true;
+		std::cout <<"Current Score: " << grid.score << "\n";
 	}
 	if (falltimer.getElapsedTime().asSeconds() > speed) {
 		falltimer.restart();
@@ -132,6 +133,8 @@ void Game::render()
 	grid.drawgrid(window);
 
 	block.drawblock(window);
+
+	UserInterface.renderui(window);
 
 	window.display();
 }
