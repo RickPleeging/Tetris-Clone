@@ -14,6 +14,9 @@ void UI::initVariables()
 	cellsize = g_cellSize;
 	//Preview Window
 	initPreview();
+	initfont();
+	//score
+	t_score.setString("0");
 }
 
 void UI::initPreview()
@@ -29,6 +32,19 @@ void UI::initPreview()
 	PreviewWindow.setFillColor(sf::Color::Transparent);
 	PreviewWindow.setOutlineColor(sf::Color::Cyan);
 	PreviewWindow.setOutlineThickness(2);
+}
+void UI::initfont()
+{
+
+	if (!font.loadFromFile("..\\Assets\\arial.ttf")) {
+		std::cout << "error loading font!";
+	}
+
+	t_score.setFont(font);
+	t_score.setFillColor(sf::Color::White);
+	t_score.setCharacterSize(40);
+	t_score.setPosition(40, g_gameheight+50);
+
 }
 
 
@@ -47,6 +63,15 @@ void UI::updateui()
 
 void UI::drawscore(sf::RenderWindow& window)
 {
+	window.draw(t_score);
+}
+
+void UI::updatescore(int score)
+{
+	std::ostringstream scorestring;
+	scorestring << "SCORE: " << score;
+	t_score.setString(scorestring.str());
+	
 }
 
 void UI::drawpreview(sf::RenderWindow& window)
@@ -66,6 +91,7 @@ void UI::drawpreview(sf::RenderWindow& window)
 	}
 	previewblock.drawblockOffGrid(window,prev_x+offset,prev_y+offset);
 }
+
 
 void UI::updatepreview(int blocktype)
 {

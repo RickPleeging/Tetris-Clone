@@ -26,7 +26,7 @@ void Grid::initgrid()
 	gridblock.setFillColor(sf::Color::Black);
 	gridblock.setOutlineColor(sf::Color(52, 222, 235,155));
 	gridblock.setOutlineThickness(1);
-	//temp score
+	//score
 	score = 0;
 }
 

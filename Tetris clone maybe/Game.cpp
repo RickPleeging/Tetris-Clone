@@ -80,7 +80,6 @@ void Game::update()
 		}
 		
 		isfalling = true;
-		std::cout <<"Current Score: " << grid.score << "\n";
 	}
 	if (falltimer.getElapsedTime().asSeconds() > speed) {
 		falltimer.restart();
@@ -90,6 +89,7 @@ void Game::update()
 
 	}
 		grid.update();
+		UserInterface.updatescore(grid.score);
 	return;
 }
 

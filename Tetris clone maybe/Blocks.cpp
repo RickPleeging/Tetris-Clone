@@ -392,8 +392,8 @@ void Blocks::drawblock(sf::RenderWindow& window)
 			}
 		}
 	}
-	outline.setPosition(sf::Vector2f(position[0] * cellsize, position[1] * cellsize));
-	window.draw(outline);
+	//outline.setPosition(sf::Vector2f(position[0] * cellsize, position[1] * cellsize));
+	//window.draw(outline);
 }
 
 void Blocks::drawblockOffGrid(sf::RenderWindow& window,int x, int y) {
