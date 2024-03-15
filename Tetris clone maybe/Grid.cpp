@@ -38,25 +38,25 @@ void Grid::drawgrid(sf::RenderWindow& window)
 			switch (matrix[i][j])
 			{
 			case 1:
-				gridblock.setFillColor(sf::Color(223, 227, 11, 155));
+				gridblock.setFillColor(sf::Color(223, 227, 11, 200));
 				break;
 			case 2:
-				gridblock.setFillColor(sf::Color(165, 9, 171, 155));
+				gridblock.setFillColor(sf::Color(165, 9, 171, 200));
 				break;
 			case 3:
-				gridblock.setFillColor(sf::Color(60, 65, 230, 155));
+				gridblock.setFillColor(sf::Color(60, 65, 230, 200));
 				break;
 			case 4:
-				gridblock.setFillColor(sf::Color(230, 135, 41, 155));
+				gridblock.setFillColor(sf::Color(230, 135, 41, 200));
 				break;
 			case 5:
-				gridblock.setFillColor(sf::Color(7, 222, 28, 155));
+				gridblock.setFillColor(sf::Color(7, 222, 28, 200));
 				break;
 			case 6:
-				gridblock.setFillColor(sf::Color(148, 14, 7, 155));
+				gridblock.setFillColor(sf::Color(148, 14, 7, 200));
 				break;
 			case 7:
-				gridblock.setFillColor(sf::Color(51, 184, 189, 155));
+				gridblock.setFillColor(sf::Color(51, 184, 189, 200));
 				break;
 			default:
 				gridblock.setFillColor(sf::Color::Black);

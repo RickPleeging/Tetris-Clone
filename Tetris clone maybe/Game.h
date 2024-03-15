@@ -54,6 +54,7 @@ public:
 	void update();
 	void updateEvents();
 	void render();
+	void gamereset();
 
 	int generateRandomNumber(int min, int max);
 

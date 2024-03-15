@@ -76,7 +76,7 @@ void Game::update()
 		if (!block.checkspace(grid.matrix)) {
 			//if cant create block, gameover
 			std::cout << "Game over\n";
-			isrunning = false;
+			gamereset();
 		}
 		
 		isfalling = true;
@@ -149,6 +149,12 @@ void Game::render()
 	UserInterface.renderui(window);
 
 	window.display();
+}
+
+void Game::gamereset()
+{
+	grid.score = 0;
+	grid.gridclear();
 }
 
 int Game::generateRandomNumber(int min, int max)

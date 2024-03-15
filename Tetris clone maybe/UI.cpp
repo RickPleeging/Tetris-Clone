@@ -74,6 +74,10 @@ void UI::updatescore(int score)
 	
 }
 
+void UI::updateHighScore()
+{
+}
+
 void UI::drawpreview(sf::RenderWindow& window)
 {
 	window.draw(PreviewWindow);

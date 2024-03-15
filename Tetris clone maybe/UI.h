@@ -14,6 +14,7 @@ public:
 	void updateui();
 	void updatepreview(int blocktype);
 	void updatescore(int score);
+	void updateHighScore();
 private:
 	void initVariables();
 	void initPreview();
@@ -32,6 +33,6 @@ private:
 	
 	sf::Font font;
 	sf::Text t_score;
-
+	sf::Text t_highscore;
 };
 
