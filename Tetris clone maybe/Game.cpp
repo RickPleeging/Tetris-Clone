@@ -163,23 +163,49 @@ void Game::gamereset()
 
 void Game::savedata()
 {
+
 	std::ifstream check("tetrissavedata.txt");
 	if (!check.good()) {
 		std::ofstream outputFile("tetrissavedata.txt");
 		std::cout << "Creating tetrissavedata.txt";
 	}
 
+	//Encrypt score
+	int key = grid.highscore *2 / (sin(grid.highscore+5));
+
+	std::string encryptedscore = std::to_string(grid.highscore) + ":" + std::to_string(key);
+	std::cout << "\nencryptedscore = " << encryptedscore;
+
 	std::ofstream file("tetrissavedata.txt");
 	if (file.is_open()) {
-		file << grid.highscore;
+		file << encryptedscore;
 		file.close();
 	}
 }
 void Game::loaddata()
 {
+	std::string encryptedscore;
+
+
 	std::ifstream file("tetrissavedata.txt");
 	if (file.is_open()) {
-		file >> grid.highscore;
+		file >> encryptedscore;
+	}
+	//decrypt check
+	size_t colon_pos = encryptedscore.find(':');
+	std::string score_str = encryptedscore.substr(0, colon_pos);
+	std::string key_str = encryptedscore.substr(colon_pos + 1);
+	int score;
+	int key;
+	std::istringstream(score_str) >> score;
+	std::istringstream(key_str) >> key;
+	int result = score * 2 / (sin(score + 5));
+	if (key == result) {
+		std::cout << "key correct!";
+		grid.highscore = score;
+	}
+	else {
+		std::cout << "key false!";
 	}
 
 }

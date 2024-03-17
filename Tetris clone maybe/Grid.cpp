@@ -14,7 +14,7 @@ void Grid::initgrid()
 	temp.clear();
 	temp.resize(20, std::vector<int>(20));
 
-	std::cout << "temp size[0]: " << temp.size() << "temp size[1]: " << temp[1].size();
+	//std::cout << "temp size[0]: " << temp.size() << "temp size[1]: " << temp[1].size();
 	matrix.resize(rows + 1, std::vector<int>(columns + 1));
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++) {
