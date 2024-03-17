@@ -78,7 +78,11 @@ void Game::update()
 		if (!block.checkspace(grid.matrix)) {
 			//if cant create block, gameover
 			std::cout << "Game over\n";
-			
+			sf::Clock looseclock;
+			looseclock.restart();
+			while (looseclock.getElapsedTime().asSeconds() < 2) {
+
+			}
 			gamereset();
 		}
 		
@@ -111,21 +115,27 @@ void Game::updateEvents()
 			}
 			if (ev.key.code == sf::Keyboard::Left) {
 				block.moveleft(grid.matrix);
+				sounds.playSound("move");
 
 			}
 			if (ev.key.code == sf::Keyboard::Right) {
 				block.moveright(grid.matrix);
+				sounds.playSound("move");
 
 			}
 			if (ev.key.code == sf::Keyboard::Up) {
 				block.rotateblock(grid.matrix,0);
+				sounds.playSound("rotate");
+
 			}
 			if (ev.key.code == sf::Keyboard::R) {
 				grid.gridclear();
 			}
 			if (ev.key.code == sf::Keyboard::Down) {
-				if (droptimer.getElapsedTime().asSeconds() > 0.2) {
+				if (droptimer.getElapsedTime().asSeconds() > 0.2) 
+				{
 					block.drop(grid.matrix);
+					sounds.playSound("drop");
 					droptimer.restart();
 				}
 			}
@@ -188,9 +198,13 @@ void Game::loaddata()
 
 
 	std::ifstream file("tetrissavedata.txt");
-	if (file.is_open()) {
+	if (!file.good()) {
+		std::cout << "no savefile found.";
+	}
+	else if (file.is_open()) {
 		file >> encryptedscore;
 	}
+
 	//decrypt check
 	size_t colon_pos = encryptedscore.find(':');
 	std::string score_str = encryptedscore.substr(0, colon_pos);

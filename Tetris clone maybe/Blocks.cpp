@@ -298,10 +298,10 @@ void Blocks::rotateblock(Matrix matrix, int offset)
 	case 1:
 		break;
 	case 2: // T block
-		if (rotation == 1) { newblock = { {0,0,0},{0,1,0}, {1,1,1} }; }
-		if (rotation == 2) { newblock = { {1,0,0},{1,1,0}, {1,0,0} }; }
-		if (rotation == 3) { newblock = { {1,1,1},{0,1,0}, {0,0,0} }; }
-		if (rotation == 4) { newblock = { {0,0,1},{0,1,1}, {0,0,1} }; }
+		if (rotation == 1) { newblock = { {0,1,0},{1,1,1}, {0,0,0} }; }
+		if (rotation == 2) { newblock = { {0,1,0},{0,1,1}, {0,1,0} }; }
+		if (rotation == 3) { newblock = { {0,0,0},{1,1,1}, {0,1,0} }; }
+		if (rotation == 4) { newblock = { {0,1,0},{1,1,0}, {0,1,0} }; }
 	break;
 	case 3: // L BLOCK		 
 		if (rotation == 1) { newblock = { {0,0,1},{1,1,1}, {0,0,0} }; }

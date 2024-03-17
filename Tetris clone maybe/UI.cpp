@@ -94,7 +94,7 @@ void UI::updateHighScore(int highscore)
 void UI::drawpreview(sf::RenderWindow& window)
 {
 	window.draw(PreviewWindow);
-	float offset;
+	float offset=0;
 	switch (previewblock.getblocksize()) {
 	case 2:
 		offset = cellsize;
@@ -106,7 +106,7 @@ void UI::drawpreview(sf::RenderWindow& window)
 		offset = 0;
 		break;
 	}
-	previewblock.drawblockOffGrid(window,prev_x+offset,prev_y+offset);
+	previewblock.drawblockOffGrid(window, prev_x + offset, prev_y + offset);
 }
 
 

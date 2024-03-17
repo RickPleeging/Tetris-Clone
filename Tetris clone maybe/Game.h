@@ -12,7 +12,7 @@
 #include "Blocks.h"
 #include "UI.h"
 #include <queue>
-
+#include "Sounds.h"
 class Game
 {
 private:
@@ -37,9 +37,9 @@ private:
 
 	Grid grid;
 	Blocks block;
-
-
 	UI UserInterface;
+	Sounds sounds;
+
 
 	std::queue<int> nextblock;
 
