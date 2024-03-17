@@ -72,6 +72,7 @@ void Grid::update()
 {
 	if(checklines() == true)
 	{	
+		//add score
 		int a=toClear.size();
 		switch (a) {
 		case 1:
@@ -91,6 +92,10 @@ void Grid::update()
 		clearlines();
 		for (auto i : toClear) {
 			movelines();
+		}
+		//check highscore
+		if (score > highscore) {
+			highscore = score;
 		}
 	}
 	return;

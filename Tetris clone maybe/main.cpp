@@ -13,11 +13,11 @@ int main() {
 	Game game;
 
 	//Game Loop
+	game.loaddata();
 	while (game.isRunning())
 	{
 		game.run();
 	}
-
-
+	game.savedata();
 	return 0;
 }

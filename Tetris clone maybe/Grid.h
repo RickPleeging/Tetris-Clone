@@ -20,6 +20,8 @@ public:
 	std::vector<std::vector<int>> temp;
 
 	int score;
+	int highscore;
+
 
 private:
 

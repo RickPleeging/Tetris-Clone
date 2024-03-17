@@ -33,8 +33,7 @@ void Game::initVariables()
 	nextblock.push(generateRandomNumber(1, 7));
 	nextblock.push(generateRandomNumber(1, 7));
 
-	//randomizer
-
+	
 }
 
 
@@ -54,6 +53,9 @@ void Game::run()
 
 bool Game::isRunning()
 {
+	if (!window.isOpen()) {
+		return false;
+	}
 	return isrunning;
 }
 
@@ -76,6 +78,7 @@ void Game::update()
 		if (!block.checkspace(grid.matrix)) {
 			//if cant create block, gameover
 			std::cout << "Game over\n";
+			
 			gamereset();
 		}
 		
@@ -86,10 +89,11 @@ void Game::update()
 		if (!block.updateblock(grid.matrix)) {
 			isfalling = false;
 		}
-
 	}
 		grid.update();
 		UserInterface.updatescore(grid.score);
+		UserInterface.updateHighScore(grid.highscore);
+
 	return;
 }
 
@@ -156,6 +160,31 @@ void Game::gamereset()
 	grid.score = 0;
 	grid.gridclear();
 }
+
+void Game::savedata()
+{
+	std::ifstream check("tetrissavedata.txt");
+	if (!check.good()) {
+		std::ofstream outputFile("tetrissavedata.txt");
+		std::cout << "Creating tetrissavedata.txt";
+	}
+
+	std::ofstream file("tetrissavedata.txt");
+	if (file.is_open()) {
+		file << grid.highscore;
+		file.close();
+	}
+}
+void Game::loaddata()
+{
+	std::ifstream file("tetrissavedata.txt");
+	if (file.is_open()) {
+		file >> grid.highscore;
+	}
+
+}
+
+
 
 int Game::generateRandomNumber(int min, int max)
 {

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
+#include <any>
 #include <random>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -56,6 +58,8 @@ public:
 	void render();
 	void gamereset();
 
+	void loaddata();
+	void savedata();
 	int generateRandomNumber(int min, int max);
 
 

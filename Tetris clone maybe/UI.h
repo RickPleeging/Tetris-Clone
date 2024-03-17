@@ -14,11 +14,13 @@ public:
 	void updateui();
 	void updatepreview(int blocktype);
 	void updatescore(int score);
-	void updateHighScore();
+	void updateHighScore(int highscore);
+
 private:
 	void initVariables();
 	void initPreview();
 	void drawscore(sf::RenderWindow& window);
+	void drawHighScore(sf::RenderWindow& window);
 	void drawpreview(sf::RenderWindow& window);
 	void initfont();
 	int columns;
@@ -34,5 +36,6 @@ private:
 	sf::Font font;
 	sf::Text t_score;
 	sf::Text t_highscore;
+	int m_highscore;
 };
 

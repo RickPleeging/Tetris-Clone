@@ -45,6 +45,11 @@ void UI::initfont()
 	t_score.setCharacterSize(40);
 	t_score.setPosition(40, g_gameheight+50);
 
+	t_highscore.setFont(font);
+	t_highscore.setFillColor(sf::Color::White);
+	t_highscore.setCharacterSize(40);
+	t_highscore.setPosition(40, g_gameheight + 90);
+
 }
 
 
@@ -54,7 +59,7 @@ void UI::renderui(sf::RenderWindow& window)
 
 	drawscore(window);
 	drawpreview(window);
-
+	drawHighScore(window);
 }
 
 void UI::updateui()
@@ -66,6 +71,11 @@ void UI::drawscore(sf::RenderWindow& window)
 	window.draw(t_score);
 }
 
+void UI::drawHighScore(sf::RenderWindow& window)
+{
+	window.draw(t_highscore);
+}
+
 void UI::updatescore(int score)
 {
 	std::ostringstream scorestring;
@@ -74,8 +84,11 @@ void UI::updatescore(int score)
 	
 }
 
-void UI::updateHighScore()
+void UI::updateHighScore(int highscore)
 {
+	std::ostringstream scorestring;
+	scorestring << "HIGH-SCORE: " << highscore;
+	t_highscore.setString(scorestring.str());
 }
 
 void UI::drawpreview(sf::RenderWindow& window)
