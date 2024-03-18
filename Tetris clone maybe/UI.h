@@ -20,7 +20,7 @@ private:
 	void initVariables();
 	void initPreview();
 	void drawscore(sf::RenderWindow& window);
-	void drawHighScore(sf::RenderWindow& window);
+	void drawHighScore(sf::RenderWindow& window); //fortnite
 	void drawpreview(sf::RenderWindow& window);
 	void initfont();
 	int columns;

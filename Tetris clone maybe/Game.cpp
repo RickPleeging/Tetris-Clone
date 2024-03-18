@@ -94,6 +94,8 @@ void Game::update()
 			isfalling = false;
 		}
 	}
+		block.setghostblock(grid.matrix);
+
 		grid.update();
 		UserInterface.updatescore(grid.score);
 		UserInterface.updateHighScore(grid.highscore);
@@ -115,6 +117,7 @@ void Game::updateEvents()
 			}
 			if (ev.key.code == sf::Keyboard::Left) {
 				block.moveleft(grid.matrix);
+
 				sounds.playSound("move");
 
 			}
@@ -158,7 +161,10 @@ void Game::render()
 	//Draw Objects
 	grid.drawgrid(window);
 
+
 	block.drawblock(window);
+	block.drawghostblock(window);
+	
 
 	UserInterface.renderui(window);
 
@@ -200,6 +206,7 @@ void Game::loaddata()
 	std::ifstream file("tetrissavedata.txt");
 	if (!file.good()) {
 		std::cout << "no savefile found.";
+		return;
 	}
 	else if (file.is_open()) {
 		file >> encryptedscore;

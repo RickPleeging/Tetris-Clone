@@ -17,9 +17,13 @@ private:
 	int rotation;
 	std::vector<std::vector<int>> block;
 	std::vector<std::vector<int>> newblock;
+	std::vector<std::vector<int>> ghostblock;
 
 	std::vector<int> position;
+	std::vector<int> ghostposition;
 	sf::RectangleShape rect;
+	sf::RectangleShape ghostrect;
+
 	sf::RectangleShape outline;
 
 	using Matrix = std::vector<std::vector<int>>&;
@@ -44,6 +48,8 @@ public:
 	void placeblock(Matrix matrix, std::vector<int> position);
 
 	int getblocksize();
+	void setghostblock(Matrix matrix);
+	void drawghostblock(sf::RenderWindow& window);
 
 	void drawblock(sf::RenderWindow& window);
 	void drawblockOffGrid(sf::RenderWindow& window,int x, int y);

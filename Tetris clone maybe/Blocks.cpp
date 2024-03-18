@@ -12,6 +12,12 @@ Blocks::Blocks()
 	rect.setFillColor(sf::Color::Red);
 	rect.setOutlineColor(sf::Color::Cyan);
 	rect.setOutlineThickness(1);
+	//ghostrectangle
+	ghostrect.setSize(sf::Vector2f(cellsize, cellsize));
+	ghostrect.setFillColor(sf::Color(200,200,200,50));
+	ghostrect.setOutlineColor(sf::Color::Cyan);
+	ghostrect.setOutlineThickness(1);
+
 	//outline
 	outline.setFillColor(sf::Color::Transparent);
 	outline.setOutlineColor(sf::Color::Magenta);
@@ -25,6 +31,9 @@ Blocks::Blocks()
 	//position x,y // rows,collumns
 	position.clear();
 	position.resize(2);
+	
+	ghostposition.clear();
+	ghostposition.resize(2);
 	//debug
 
 }
@@ -32,7 +41,8 @@ Blocks::Blocks()
 //return true if updated, return false if block placed
 bool Blocks::updateblock(Matrix matrix)
 {
-	
+
+
 	//move, if no free space bellow -> place in grid
 	if (!movedown(matrix))
 	{
@@ -378,6 +388,78 @@ bool Blocks::kickback(Matrix matrix)
 int Blocks::getblocksize()
 {
 	return block.size();
+}
+
+void Blocks::setghostblock(Matrix matrix)
+{
+	ghostposition[0] = position[0];
+	ghostposition[1] = position[1];
+
+	int empty = 0;
+	bool stopit = false;
+	//Find Ammount of empty rows starting from the bottom
+	for (int i = block.size() - 1; i >= 0; i--) {
+		if (stopit) {
+			break;
+		}
+		for (int j = 0; j < block[i].size(); j++) {
+			if (block[i][j] == 1) {
+				stopit = true;
+				break;
+			}
+			else if (j == block[i].size() - 1) {
+				empty++;
+			}
+
+		}
+	}
+	int temp;
+	//Remaining to the bottom
+	int remaining = rows - ghostposition[1]; //20
+	//Remaining to the bottom + lowest position of the block
+	int droppos = remaining - block[1].size() + empty; //19
+
+	//For Every square in the block find its lowest possible position
+	for (int i = 0; i < block.size(); i++) {
+		for (int j = 0; j < block[i].size(); j++) {
+			if (block[i][j] == 0)
+				continue;
+
+			temp = 0;
+			for (int r = 0; r < remaining; r++) {
+				//check if bellow is free space
+				if (i + ghostposition[1] + r < rows && matrix[i + ghostposition[1] + r + 1][j + ghostposition[0]] == 0)
+				{
+					temp++;
+					continue;
+				}
+				//drop position should be the highest out of all squares lowest positions
+				if (temp < droppos) {
+					droppos = temp;
+					break;
+				}
+			}
+		}
+	}
+	ghostposition[1] += droppos;
+	//placeblock(matrix, position);
+
+}
+
+
+void Blocks::drawghostblock(sf::RenderWindow& window)
+{
+
+
+
+	for (int i = 0; i < block.size(); i++) {
+		for (int j = 0; j < block[i].size(); j++) {
+			if (block[i][j] != 0) {
+				ghostrect.setPosition(sf::Vector2f((j + ghostposition[0]) * cellsize, (i + ghostposition[1]) * cellsize));
+				window.draw(ghostrect);
+			}
+		}
+	}
 }
 
 
