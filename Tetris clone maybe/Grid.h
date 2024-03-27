@@ -1,5 +1,6 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include "SFMLWRAPPER.h"
+
 #include "gameconfig.h"
 #include <deque>
 class Grid

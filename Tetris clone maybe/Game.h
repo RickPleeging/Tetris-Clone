@@ -2,19 +2,53 @@
 
 #include <iostream>
 #include <fstream>
-#include <any>
 #include <random>
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
 #include <vector>
+#include <queue>
+
+#include "SFMLWRAPPER.h"
+
 #include "gameconfig.h"
 #include "Grid.h"
 #include "Blocks.h"
+#include "Menu.h"
 #include "UI.h"
-#include <queue>
+#include "random.h"
 #include "Sounds.h"
+
+
 class Game
 {
+
+public:
+
+	//Con-Destructors
+	Game();
+	virtual ~Game();
+
+	bool isRunning();
+
+	void run();
+
+	void updateGame();
+	void handleEvents(const sf::Event& event);
+	void renderGame();
+
+	enum class GameState {
+		Menu,
+		Playing,
+		GameOver
+	};
+	static GameState gameState;
+
+
+	void gamereset();
+
+	void loaddata();
+	void savedata();
+
+	
+
 private:
 	bool isrunning;
 
@@ -27,6 +61,7 @@ private:
 
 	sf::RenderWindow window;
 	sf::Event ev;
+	sf::Font globalFont;
 
 	sf::Clock clock;
 	sf::Clock falltimer;
@@ -35,33 +70,16 @@ private:
 
 	void initVariables();
 
+
 	Grid grid;
 	Blocks block;
 	UI UserInterface;
 	Sounds sounds;
-
+	Menu menu;
 
 	std::queue<int> nextblock;
 
 	bool isfalling;
-public:
-	
-	//Con-Destructors
-	Game();
-	virtual ~Game();
-
-	bool isRunning();
-
-	void run();
-	void update();
-	void updateEvents();
-	void render();
-	void gamereset();
-
-	void loaddata();
-	void savedata();
-	int generateRandomNumber(int min, int max);
-
 
 };
 

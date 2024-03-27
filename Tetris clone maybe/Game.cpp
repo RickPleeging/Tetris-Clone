@@ -2,9 +2,11 @@
 
 
 //Constructors and Destructors
-Game::Game()
+Game::Game() :UserInterface(globalFont), menu(window,globalFont)
 {
+
 	initVariables();
+
 }
 
 Game::~Game()
@@ -20,7 +22,7 @@ void Game::initVariables()
 	cellsize = g_cellSize;
 	//init window
 	ev = sf::Event();
-	window.create(sf::VideoMode(g_windowwidth,g_windowheight ), "Teris");
+	window.create(sf::VideoMode(g_windowwidth, g_windowheight), "Teris");
 	window.setFramerateLimit(144);
 
 	//variables
@@ -33,88 +35,76 @@ void Game::initVariables()
 	nextblock.push(generateRandomNumber(1, 7));
 	nextblock.push(generateRandomNumber(1, 7));
 
-	
+
+	//Font
+	if (!globalFont.loadFromFile("..\\Assets\\arial.ttf"))
+	{
+		std::cout << "error loading font!";
+	}
+
+
 }
+//init const Gamestate
+Game::GameState Game::gameState = Game::GameState::Menu;
 
 
 //Functions
 void Game::run()
 {
-	
 	sf::Time dt = clock.restart();
 	float dts = dt.asMicroseconds();
 
-	updateEvents();
-	update();
-	render();
+
+	while (window.pollEvent(ev)) {
+		handleEvents(ev);
+	}
+
+	switch (gameState)
+	{
+	case Game::GameState::Menu:
+		menu.updateMenu();
+		menu.renderMenu();
+		break;
+	case Game::GameState::Playing:
+		updateGame();
+		renderGame();
+		break;
+	case Game::GameState::GameOver:
+		break;
+	default:
+		break;
+	}
+
 
 	//std::cout << dts << "\n";
 }
 
-bool Game::isRunning()
+void Game::handleEvents(const sf::Event& event)
 {
-	if (!window.isOpen()) {
-		return false;
-	}
-	return isrunning;
-}
 
 
-
-void Game::update()
-{
-	//Revamp this thing please for the love of god its bad 
-	
-
-	if (!isfalling) // if the block is placed into the grid
-	{
-
-		//create block from queue
-		block.createblock(nextblock.front());
-		nextblock.pop();
-		nextblock.push(generateRandomNumber(1, 7));
-		UserInterface.updatepreview(nextblock.front());
-		//check if blockcreation possible
-		if (!block.checkspace(grid.matrix)) {
-			//if cant create block, gameover
-			std::cout << "Game over\n";
-			sf::Clock looseclock;
-			looseclock.restart();
-			while (looseclock.getElapsedTime().asSeconds() < 2) {
-
-			}
-			gamereset();
-		}
-		
-		isfalling = true;
-	}
-	if (falltimer.getElapsedTime().asSeconds() > speed) {
-		falltimer.restart();
-		if (!block.updateblock(grid.matrix)) {
-			isfalling = false;
-		}
-	}
-		block.setghostblock(grid.matrix);
-
-		grid.update();
-		UserInterface.updatescore(grid.score);
-		UserInterface.updateHighScore(grid.highscore);
-
-	return;
-}
-
-void Game::updateEvents()
-{
-	while (window.pollEvent(ev))
-	{
-		if (ev.type == sf::Event::Closed) {
+	switch (ev.type) {
+	case sf::Event::Closed:
+		window.close();
+		break;
+	case sf::Event::KeyPressed:
+		if (ev.key.code == sf::Keyboard::X) 
 			window.close();
-		}
-		if (ev.type == sf::Event::KeyPressed) {
-			if (ev.key.code == sf::Keyboard::X)
-			{
-				window.close();
-			}
+		break;
+	default:
+		break;
+	}
+
+
+
+	switch (gameState)
+	{
+	case Game::GameState::Menu:
+		break;
+	case Game::GameState::Playing:
+		if (ev.type == sf::Event::KeyPressed) 
+		{
+
 			if (ev.key.code == sf::Keyboard::Left) {
 				block.moveleft(grid.matrix);
 
@@ -127,7 +117,7 @@ void Game::updateEvents()
 
 			}
 			if (ev.key.code == sf::Keyboard::Up) {
-				block.rotateblock(grid.matrix,0);
+				block.rotateblock(grid.matrix, 0);
 				sounds.playSound("rotate");
 
 			}
@@ -135,47 +125,51 @@ void Game::updateEvents()
 				grid.gridclear();
 			}
 			if (ev.key.code == sf::Keyboard::Down) {
-				if (droptimer.getElapsedTime().asSeconds() > 0.2) 
+				if (droptimer.getElapsedTime().asSeconds() > 0.2)
 				{
 					block.drop(grid.matrix);
 					sounds.playSound("drop");
 					droptimer.restart();
+					falltimer.restart();
 				}
 			}
 
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Hyphen)) {
+				speed += 0.05;
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Equal)) {
+				speed -= 0.05;
+			}
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Hyphen)) {
-			speed+=0.05;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Equal)) {
-			speed-=0.05;
-		}
+		break;
+	case Game::GameState::GameOver:
+		break;
+	default:
+		break;
 	}
+
+
+
 }
 
-void Game::render()
+bool Game::isRunning()
 {
-	window.clear(sf::Color::Black);
-
-	//Draw Objects
-	grid.drawgrid(window);
-
-
-	block.drawblock(window);
-	block.drawghostblock(window);
-	
-
-	UserInterface.renderui(window);
-
-	window.display();
+	if (!window.isOpen()) {
+		return false;
+	}
+	return isrunning;
 }
+
+
 
 void Game::gamereset()
 {
 	grid.score = 0;
 	grid.gridclear();
 }
+
+
 
 void Game::savedata()
 {
@@ -187,7 +181,7 @@ void Game::savedata()
 	}
 
 	//Encrypt score
-	int key = grid.highscore *2 / (sin(grid.highscore+5));
+	int key = grid.highscore * 2 / (sin(grid.highscore + 5));
 
 	std::string encryptedscore = std::to_string(grid.highscore) + ":" + std::to_string(key);
 	std::cout << "\nencryptedscore = " << encryptedscore;
@@ -198,6 +192,8 @@ void Game::savedata()
 		file.close();
 	}
 }
+
+
 void Game::loaddata()
 {
 	std::string encryptedscore;
@@ -230,16 +226,4 @@ void Game::loaddata()
 	}
 
 }
-
-
-
-int Game::generateRandomNumber(int min, int max)
-{
-	std::random_device rd;
-	std::mt19937 generator(rd());
-	std::uniform_int_distribution<int> distribution(min, max);
-	return distribution(generator);
-
-}
-
 

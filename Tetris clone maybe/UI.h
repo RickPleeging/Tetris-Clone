@@ -1,5 +1,6 @@
 #pragma once
-#include <SFML/graphics.hpp>
+#include "SFMLWRAPPER.h"
+
 #include <sstream>
 #include "gameconfig.h"
 #include "Blocks.h"
@@ -9,7 +10,8 @@
 class UI
 {
 public:
-	UI();
+	UI(sf::Font& globalFont);
+	
 	void renderui(sf::RenderWindow& window);
 	void updateui();
 	void updatepreview(int blocktype);
@@ -33,7 +35,7 @@ private:
 	sf::RectangleShape PreviewWindow;
 	float previewsize;
 	
-	sf::Font font;
+	sf::Font& font;
 	sf::Text t_score;
 	sf::Text t_highscore;
 	int m_highscore;

@@ -1,6 +1,6 @@
 #pragma once
-#include <SFML/Audio.hpp>
 #include <iostream>
+#include "SFMLWRAPPER.h"
 class Sounds
 {
 public:

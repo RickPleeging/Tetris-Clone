@@ -13,25 +13,49 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{f5f3a933-f4be-45c0-a09f-70d1f97960ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Functions">
+      <UniqueIdentifier>{aa03cde3-d8ee-471d-93fe-1297cd6caa42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Classes">
+      <UniqueIdentifier>{a602cf9f-7608-443d-9b2e-744de3e4afe8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Classes\Menu">
+      <UniqueIdentifier>{212bb9c6-721c-42a8-9a96-ac3b6ed8861c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="random.cpp">
+      <Filter>Source Files\Functions</Filter>
     </ClCompile>
     <ClCompile Include="Blocks.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\Classes</Filter>
     </ClCompile>
     <ClCompile Include="Grid.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UI.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\Classes</Filter>
     </ClCompile>
     <ClCompile Include="Sounds.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Source Files\Game\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="playing.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="menu.cpp">
+      <Filter>Source Files\Game\Classes\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\Game\Classes\Menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +75,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sounds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="random.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SFMLWRAPPER.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -128,17 +128,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Blocks.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="menu.cpp" />
+    <ClCompile Include="playing.cpp" />
+    <ClCompile Include="random.cpp" />
     <ClCompile Include="Sounds.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Blocks.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="gameconfig.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="random.h" />
+    <ClInclude Include="SFMLWRAPPER.h" />
     <ClInclude Include="Sounds.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>

@@ -1,10 +1,14 @@
 #include "UI.h"
 
 
-UI::UI()
+
+
+UI::UI(sf::Font& globalFont) : font(globalFont)
 {
 	initVariables();
 }
+
+
 
 void UI::initVariables()
 {
@@ -36,9 +40,6 @@ void UI::initPreview()
 void UI::initfont()
 {
 
-	if (!font.loadFromFile("..\\Assets\\arial.ttf")) {
-		std::cout << "error loading font!";
-	}
 
 	t_score.setFont(font);
 	t_score.setFillColor(sf::Color::White);
